@@ -1,9 +1,12 @@
 package com.example.myfirstapp;
 
 import android.os.StrictMode;
+import android.provider.ContactsContract;
 import android.provider.SyncStateContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.content.Intent;
@@ -11,6 +14,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.io.BufferedReader;
@@ -42,6 +46,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -51,6 +57,14 @@ public class MainActivity extends AppCompatActivity {
 Button Blogin;
 
 
+    Boolean validuser , correctPassword,validpass;
+
+
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +72,115 @@ Button Blogin;
          Blogin = (Button)findViewById(R.id.Blogin);
         content = (TextView)findViewById(R.id.content);
         email = (EditText) findViewById(R.id.TFusername);
+        validuser=false;
+        validpass=false;
+       correctPassword=false;
+
         password = (EditText) findViewById(R.id.editText4);
+
+
+
+      // final String Email = email.getText().toString().trim();
+
+       final String regEx =  "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+   //     boolean isEmailValid(CharSequence email) {
+    //       return android.util.Patterns.EMAIL_ADDRESS.matcher(Email).matches();
+  //  }
+
+
+
+
+        Log.d("pass",correctPassword.toString());
+
+        email.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+            @Override
+            public void onFocusChange(View v, boolean hasFocus){
+
+                if(email.getText().length()<5  ){
+                    Toast.makeText(getApplicationContext(), "Invalid Username", Toast.LENGTH_SHORT).show();
+                    //  email.setError("Invalid");
+                    validuser =false;
+                }else
+                {validuser=true;}
+                String Email = email.getText().toString().trim();
+
+
+
+                if(Email.matches(regEx)) {
+                    validuser=true;
+                }else{
+                    Toast.makeText(getApplicationContext(), "Invalid email address", Toast.LENGTH_SHORT).show();
+                                      validuser=false;
+                }
+
+            }
+
+        });
+
+        password.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+
+            @Override
+            public void onFocusChange(View v, boolean hasFocus){
+
+                if(password.getText().length()<6){
+                    password.setError("Enter minimum 6 Characters");
+                    correctPassword = false;
+                }
+                else if(password.getText().length() >= 6){
+                    correctPassword = true;
+                }
+
+              //  if(validuser && correctPassword){
+               //     Blogin.setEnabled(true);
+               // }else{
+                 //   Blogin.setEnabled(false);
+               // }
+
+
+            }
+
+        });
+
+        Log.d("val",validuser.toString());
+        Log.d("val",validpass.toString());
+
+
+
+
+        // email.addTextChangedListener(new TextWatcher() {
+
+
+           //  @Override
+            // public void afterTextChanged(Editable s) {
+            //     if (Email.matches(emailPattern) && s.length() > 0) {
+                    // Toast.makeText(getApplicationContext(),"Valid Email Address",Toast.LENGTH_SHORT);
+          //           content.setText("valid Email");
+            //     }
+        //         else
+      //           {
+                    // Toast.makeText(getApplicationContext(),"Enter Valid Email Address",Toast.LENGTH_SHORT);
+    //                 content.setText("Invalid Email");
+  //               }
+//
+      //       }
+    //         @Override
+  //           public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//             }
+
+    //         @Override
+  //           public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+         //    }
+       //  });
+
+
+
+
+
+
+
         //button
 
         // Log.d("CLASS","abc");
@@ -68,26 +190,34 @@ Button Blogin;
             public void onClick(View v)
             {
 
-                try{
 
-                    // CALL GetText method to make post method call
-                    GetTextNew();
+             try {
+               //    if(Email.matches(regEx))
+                 //  {
+                // if(valid){
 
+                 GetTextNew();
 
+                 //  }
+                 //else
+                  // {oToast.makeText(getApplicationContext(), "Form is invalid", Toast.LENGTH_SHORT).show();
+                  // }
 
-                }
-                catch(Exception ex)
-                {
+              }
+              catch (Exception ex)
+              {
 
-                    content.setText(" url exeption! " );//
-                }
+              }
             }
         });}
+
+
+
     public  void  GetTextNew()  throws UnsupportedEncodingException
     {
 
 
-        Email   = email.getText().toString();
+       Email   = email.getText().toString();
         Password   = password.getText().toString();
         Log.d("Email",Email);
         Log.d("Password",Password);

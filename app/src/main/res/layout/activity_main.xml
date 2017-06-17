@@ -25,7 +25,7 @@
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-
+    android:layout_alignRight="@+id/editText3"
     android:id="@+id/content"
     android:text=""/>
     <!--<TextView-->
@@ -36,7 +36,7 @@
 
     <EditText
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
+        android:inputType="textEmailAddress"
         android:ems="10"
         android:layout_below="@+id/editText3"
         android:layout_alignParentLeft="true"
@@ -52,10 +52,7 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:onClick="OnButtonClick" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/autocomplete"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
