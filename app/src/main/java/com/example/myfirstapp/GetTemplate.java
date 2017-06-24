@@ -53,8 +53,7 @@ public class GetTemplate extends AppCompatActivity {
         Button Get_User_Templates = (Button) findViewById(R.id.BgetTemplate);
 
 
-        List = (TextView)findViewById(R.id.list);
-        numbers = (TextView) findViewById(R.id.numbers);
+
 
         Get_User_Templates.setOnClickListener(new Button.OnClickListener() {
 

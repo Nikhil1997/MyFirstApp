@@ -1,5 +1,6 @@
 package com.example.myfirstapp;
 
+import android.app.ProgressDialog;
 import android.os.StrictMode;
 import android.provider.ContactsContract;
 import android.provider.SyncStateContract;
@@ -51,10 +52,11 @@ import java.util.regex.Pattern;
 
 
 public class MainActivity extends AppCompatActivity {
-    TextView content;
+    TextView signuplink;
     EditText email, password;
     String Email,Password;
 Button Blogin;
+    private static final int REQUEST_SIGNUP = 0;
 
 
     Boolean validuser , correctPassword,validpass;
@@ -69,20 +71,18 @@ Button Blogin;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-         Blogin = (Button)findViewById(R.id.Blogin);
-        content = (TextView)findViewById(R.id.content);
-        email = (EditText) findViewById(R.id.TFusername);
-        validuser=false;
-        validpass=false;
-       correctPassword=false;
+         Blogin = (Button)findViewById(R.id.btn_login);
 
-        password = (EditText) findViewById(R.id.editText4);
+        email = (EditText) findViewById(R.id.input_email);
 
+
+        password = (EditText) findViewById(R.id.input_password);
+        signuplink = (TextView) findViewById(R.id.link_signup);
 
 
       // final String Email = email.getText().toString().trim();
 
-       final String regEx =  "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
 
    //     boolean isEmailValid(CharSequence email) {
     //       return android.util.Patterns.EMAIL_ADDRESS.matcher(Email).matches();
@@ -91,59 +91,12 @@ Button Blogin;
 
 
 
-        Log.d("pass",correctPassword.toString());
-
-        email.setOnFocusChangeListener(new View.OnFocusChangeListener(){
-            @Override
-            public void onFocusChange(View v, boolean hasFocus){
-
-                if(email.getText().length()<5  ){
-                    Toast.makeText(getApplicationContext(), "Invalid Username", Toast.LENGTH_SHORT).show();
-                    //  email.setError("Invalid");
-                    validuser =false;
-                }else
-                {validuser=true;}
-                String Email = email.getText().toString().trim();
+    //    Log.d("pass",correctPassword.toString());
 
 
 
-                if(Email.matches(regEx)) {
-                    validuser=true;
-                }else{
-                    Toast.makeText(getApplicationContext(), "Invalid email address", Toast.LENGTH_SHORT).show();
-                                      validuser=false;
-                }
-
-            }
-
-        });
-
-        password.setOnFocusChangeListener(new View.OnFocusChangeListener(){
-
-            @Override
-            public void onFocusChange(View v, boolean hasFocus){
-
-                if(password.getText().length()<6){
-                    password.setError("Enter minimum 6 Characters");
-                    correctPassword = false;
-                }
-                else if(password.getText().length() >= 6){
-                    correctPassword = true;
-                }
-
-              //  if(validuser && correctPassword){
-               //     Blogin.setEnabled(true);
-               // }else{
-                 //   Blogin.setEnabled(false);
-               // }
-
-
-            }
-
-        });
-
-        Log.d("val",validuser.toString());
-        Log.d("val",validpass.toString());
+     //   Log.d("val",validuser.toString());
+      //  Log.d("val",validpass.toString());
 
 
 
@@ -190,26 +143,97 @@ Button Blogin;
             public void onClick(View v)
             {
 
+               login();
 
-             try {
-               //    if(Email.matches(regEx))
-                 //  {
-                // if(valid){
-
-                 GetTextNew();
-
-                 //  }
-                 //else
-                  // {oToast.makeText(getApplicationContext(), "Form is invalid", Toast.LENGTH_SHORT).show();
-                  // }
-
-              }
-              catch (Exception ex)
-              {
-
-              }
             }
-        });}
+        });
+
+
+
+        signuplink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent inte = new Intent(getApplicationContext(),SignUpActivity.class);
+                startActivityForResult(inte,REQUEST_SIGNUP);
+            }
+        });
+
+
+
+
+    }
+
+
+    public void login(){
+
+        if (!validate()) {
+            onLoginFailed();
+            return;
+        }
+        Blogin.setEnabled(false);
+
+        final ProgressDialog progressDialog = new ProgressDialog(this,
+                R.style.AppTheme);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Authenticating...");
+        progressDialog.show();
+
+        try {
+
+            GetTextNew();
+
+        }
+        catch (Exception ex)
+        {
+
+        }
+
+          new android.os.Handler().postDelayed(new Runnable() {
+
+              public void run() {
+                  onLoginsuccess();
+
+                 progressDialog.dismiss();
+
+              }
+          },3000);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_SIGNUP) {
+            if (resultCode == RESULT_OK) {
+
+
+                // By default we just finish the Activity and log them in automatically
+               //this.finish();
+            }
+        }
+    }
+
+
+
+    //   @Override
+ //   public void onBackPressed() {
+        // disable going back to the MainActivity
+  //      moveTaskToBack(true);
+  //  }
+
+    public void onLoginsuccess() {
+        Blogin.setEnabled(true);
+        finish();
+    }
+
+    public void onLoginFailed() {
+        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+
+        Blogin.setEnabled(true);
+    }
+
+
+
+
 
 
 
@@ -279,7 +303,7 @@ Button Blogin;
                    if (success) {
                       Intent i = new Intent(MainActivity.this, GetTemplate.class);
                      //  Intent in = new Intent(MainActivity.this , GetFields.class) ;
-                       EditText email = (EditText) findViewById(R.id.TFusername);
+                       EditText email = (EditText) findViewById(R.id.input_email);
                        String getrec=email.getText().toString();
                        Bundle bundle = new Bundle();
                        bundle.putString("Email", getrec);
@@ -338,6 +362,30 @@ Button Blogin;
 //        catch (Exception e){
 //
 //        }
+
+
+    public boolean validate() {
+        boolean valid = true;
+
+        String Email = email.getText().toString();
+        String Password = password.getText().toString();
+
+        if (Email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(Email).matches()) {
+            email.setError("enter a valid email address");
+            valid = false;
+        } else {
+            email.setError(null);
+        }
+
+        if (Password.isEmpty() || Password.length() < 4 || Password.length() > 10) {
+          password.setError("between 4 and 10 alphanumeric characters");
+            valid = false;
+        } else {
+           password.setError(null);
+        }
+
+        return valid;
+    }
 
 
 
