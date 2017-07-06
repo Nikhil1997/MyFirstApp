@@ -19,7 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="8dp"
+            android:textColorHint="@android:color/holo_blue_dark">
             <EditText android:id="@+id/input_firstname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -31,7 +32,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="8dp"
+            android:textColorHint="@android:color/holo_blue_dark">
             <EditText android:id="@+id/input_lastname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -45,7 +47,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="8dp"
+            android:textColorHint="@android:color/holo_blue_dark">
             <EditText android:id="@+id/input_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -58,7 +61,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="8dp"
+            android:textColorHint="@android:color/holo_blue_dark">
             <EditText android:id="@+id/input_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -70,7 +74,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="8dp"
+            android:textColorHint="@android:color/holo_blue_dark">
             <EditText android:id="@+id/input_companyname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -82,7 +87,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="8dp"
+            android:textColorHint="@android:color/holo_blue_dark">
             <EditText android:id="@+id/input_Mobilenumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -102,6 +108,7 @@
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
+            android:background="@android:color/holo_green_dark"
             android:text="Create Account"/>
 
         <TextView android:id="@+id/link_login"
@@ -109,6 +116,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:text="Already a member? Login"
+            android:textColor="@android:color/holo_blue_dark"
             android:gravity="center"
             android:textSize="16dip"/>
 

@@ -5,10 +5,17 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.StrictMode;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,6 +46,11 @@ import java.util.List;
 public class GetTemplate extends AppCompatActivity {
 
     TextView content, List , numbers;
+    Toolbar tool_bar;
+    DrawerLayout drawerLayout;
+    ActionBarDrawerToggle actionBarDrawerToggle;
+    FragmentTransaction fragmentTransaction;
+    NavigationView navigationView;
 
     String Email,userid;
     Button btn1;
@@ -50,12 +62,111 @@ public class GetTemplate extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_template);
 
-        Button Get_User_Templates = (Button) findViewById(R.id.BgetTemplate);
+        tool_bar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(tool_bar);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+       actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,tool_bar,R.string.drawer_open,R.string.drawer_close);
+
+
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+        fragmentTransaction.add(R.id.main_container,new HomeFragment());
+        fragmentTransaction.commit();
+        getSupportActionBar().setTitle("Home");
+        Bundle bundle = getIntent().getExtras();
+        String Email = bundle.getString("Email");
+        navigationView = (NavigationView)findViewById(R.id.navigation_view);
+
+        View hView = navigationView.getHeaderView(0);
+        TextView nav_user = (TextView) hView.findViewById(R.id.mail);
+        nav_user.setText(Email);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+               switch (item.getItemId())
+               {
+                   case R.id.home_id:
+                       fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                       fragmentTransaction.replace(R.id.main_container,new HomeFragment());
+                        fragmentTransaction.commit();
+                         getSupportActionBar().setTitle("Welcome to FeedzApp");
+                       item.setChecked(true);
+                       drawerLayout.closeDrawers();
+                       break;
+
+                   case R.id.surveys_id:
+                       fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                       fragmentTransaction.replace(R.id.main_container,new MySurveysFragment());
+                       fragmentTransaction.commit();
+                       getSupportActionBar().setTitle("Create a New Survey");
+                       item.setChecked(true);
+                       drawerLayout.closeDrawers();
+                       break;
+
+                   case R.id.about_id:
+                       fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                       fragmentTransaction.replace(R.id.main_container,new AboutFragment());
+                       fragmentTransaction.commit();
+                       getSupportActionBar().setTitle("Know About Us");
+
+
+                       item.setChecked(true);
+                       drawerLayout.closeDrawers();
+                       break;
+
+                   case R.id.settings_id:
+                       fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                       fragmentTransaction.replace(R.id.main_container,new SettingsFragment());
+                       fragmentTransaction.commit();
+                       getSupportActionBar().setTitle("Change your Settings");
+                       item.setChecked(true);
+                       drawerLayout.closeDrawers();
+                       break;
+
+                   case R.id.help_id:
+                       fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                       fragmentTransaction.replace(R.id.main_container,new HelpFragment());
+                       fragmentTransaction.commit();
+                       getSupportActionBar().setTitle("Know anything from us");
+                       item.setChecked(true);
+                       drawerLayout.closeDrawers();
+                       break;
+
+                   case R.id.logout_id:
+                       fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                       fragmentTransaction.replace(R.id.main_container,new LogOutFragment());
+                       fragmentTransaction.commit();
+                       getSupportActionBar().setTitle("");
+                       Intent intent = new Intent(getApplicationContext(), HomePageActivity.class);
+                       startActivity(intent);
+                       item.setChecked(true);
+                       drawerLayout.closeDrawers();
+                       break;
 
 
 
 
-        Get_User_Templates.setOnClickListener(new Button.OnClickListener() {
+
+               }
+
+
+
+                return false;
+            }
+        });
+      // DrawerLayout drawerLayout = new DrawerLayout(this);
+
+      //  Button templates = new Button(this);
+      //  templates.setText("Browse Template Gallery");
+     //   drawerLayout.addView(templates);
+      Button Get_User_Templates = (Button) findViewById(R.id.BgetTemplate);
+
+
+
+
+      Get_User_Templates.setOnClickListener(new Button.OnClickListener() {
 
             public void onClick(View v) {
 
@@ -81,6 +192,15 @@ public class GetTemplate extends AppCompatActivity {
 
 
     }
+
+
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState){
+        super.onPostCreate(savedInstanceState);
+        actionBarDrawerToggle.syncState();
+    }
+
 
 
     public void GetTemp() throws UnsupportedEncodingException {
@@ -179,11 +299,7 @@ public class GetTemplate extends AppCompatActivity {
                         //int no = number.getInt("id");
                       //  List.append(name);
                         //List.append("\n");
-                        TextView label = new TextView(this);
 
-                        label.setHint(name);
-
-                        ll.addView(label);
                        // numbers.append(Integer.toString(no));
                        // numbers.append("\n");
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -195,8 +311,9 @@ public class GetTemplate extends AppCompatActivity {
                         btn.setId(p);
                        //btn.setOnClickListener(getOnClickDoSomething(button));
                        final int id_ = btn.getId();
-                        btn.setText("button " + id_);
-                        btn.setBackgroundColor(Color.rgb(60, 80, 100));
+                        btn.setText(name);
+                        btn.setBackgroundColor(Color.rgb(100, 80, 40));
+                        params.setMargins(20, 20, 20, 60);
                          ll.addView(btn, params);
 
                         btn1 = ((Button) findViewById(id_));

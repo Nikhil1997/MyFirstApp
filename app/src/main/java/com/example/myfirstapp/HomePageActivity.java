@@ -29,6 +29,7 @@ public class HomePageActivity extends AppCompatActivity {
         sgnup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent in = new Intent(getApplicationContext(),SignUpActivity.class);
                 startActivity(in);
             }

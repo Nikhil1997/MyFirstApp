@@ -53,13 +53,17 @@ import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
     TextView signuplink;
+
     EditText email, password;
     String Email,Password;
 Button Blogin;
     private static final int REQUEST_SIGNUP = 0;
+  private Boolean successful ;
 
 
     Boolean validuser , correctPassword,validpass;
+
+   // Boolean success;
 
 
 
@@ -78,65 +82,15 @@ Button Blogin;
 
         password = (EditText) findViewById(R.id.input_password);
         signuplink = (TextView) findViewById(R.id.link_signup);
+      //  getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-      // final String Email = email.getText().toString().trim();
-
-
-
-   //     boolean isEmailValid(CharSequence email) {
-    //       return android.util.Patterns.EMAIL_ADDRESS.matcher(Email).matches();
-  //  }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+     //   getSupportActionBar().setHomeButtonEnabled(true);
 
 
 
+        // getActionBar().setHomeButtonEnabled(true);
 
-    //    Log.d("pass",correctPassword.toString());
-
-
-
-     //   Log.d("val",validuser.toString());
-      //  Log.d("val",validpass.toString());
-
-
-
-
-        // email.addTextChangedListener(new TextWatcher() {
-
-
-           //  @Override
-            // public void afterTextChanged(Editable s) {
-            //     if (Email.matches(emailPattern) && s.length() > 0) {
-                    // Toast.makeText(getApplicationContext(),"Valid Email Address",Toast.LENGTH_SHORT);
-          //           content.setText("valid Email");
-            //     }
-        //         else
-      //           {
-                    // Toast.makeText(getApplicationContext(),"Enter Valid Email Address",Toast.LENGTH_SHORT);
-    //                 content.setText("Invalid Email");
-  //               }
-//
-      //       }
-    //         @Override
-  //           public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//             }
-
-    //         @Override
-  //           public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-         //    }
-       //  });
-
-
-
-
-
-
-
-        //button
-
-        // Log.d("CLASS","abc");
 
         Blogin.setOnClickListener(new Button.OnClickListener(){
 
@@ -163,8 +117,31 @@ Button Blogin;
 
     }
 
+ //   @Override
+ //   public boolean onSupportNavigateUp(){
+  //      finish();
+  //      return true;
+   // }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
+    }
+
 
     public void login(){
+
+        try {
+
+           GetTextNew();
+
+        }
+        catch (Exception ex)
+        {
+            Log.d("as","check valid email and password");
+        }
+
 
         if (!validate()) {
             onLoginFailed();
@@ -172,21 +149,22 @@ Button Blogin;
         }
         Blogin.setEnabled(false);
 
+   //    try {
+
+  //         GetTextNew();
+
+  //     }
+   //   catch (Exception ex)
+ //      {
+  //        Log.d("as","check valid email and password");
+    //    }
+
         final ProgressDialog progressDialog = new ProgressDialog(this,
                 R.style.AppTheme);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        try {
-
-            GetTextNew();
-
-        }
-        catch (Exception ex)
-        {
-
-        }
 
           new android.os.Handler().postDelayed(new Runnable() {
 
@@ -207,17 +185,17 @@ Button Blogin;
 
 
                 // By default we just finish the Activity and log them in automatically
-               //this.finish();
+               this.finish();
             }
         }
     }
 
 
 
-    //   @Override
- //   public void onBackPressed() {
+     //  @Override
+  // public void onBackPressed() {
         // disable going back to the MainActivity
-  //      moveTaskToBack(true);
+ //       moveTaskToBack(true);
   //  }
 
     public void onLoginsuccess() {
@@ -234,7 +212,7 @@ Button Blogin;
 
 
 
-
+ // Boolean successful;
 
 
     public  void  GetTextNew()  throws UnsupportedEncodingException
@@ -292,15 +270,20 @@ Button Blogin;
                 Log.d("Http Post Response:", a);
                 try {
                     JSONObject json = new JSONObject(a);
-                    Boolean success = json.getBoolean("success");
+                  Boolean success = json.getBoolean("success");
+                    String error = json.getString("error");
                     Log.v("success:", "" + success);
-                    JSONArray info = json.getJSONArray("userInfo");
-                    JSONObject d = info.getJSONObject(0);
-                    int id = d.getInt("id");
-                    Log.d("id", "" + id);
-
-
+      //              JSONArray info = json.getJSONArray("userInfo");
+       //             JSONObject d = info.getJSONObject(0);
+       //             int id = d.getInt("id");
+       //             Log.d("id", "" + id);
+                    successful = success;
                    if (success) {
+
+                       JSONArray info = json.getJSONArray("userInfo");
+                                  JSONObject d = info.getJSONObject(0);
+                                   int id = d.getInt("id");
+                                   Log.d("id", "" + id);
                       Intent i = new Intent(MainActivity.this, GetTemplate.class);
                      //  Intent in = new Intent(MainActivity.this , GetFields.class) ;
                        EditText email = (EditText) findViewById(R.id.input_email);
@@ -313,6 +296,7 @@ Button Blogin;
 
                        i.putExtras(bundle);
                         startActivity(i);
+                       Log.d("dr",success.toString());
 
 
 
@@ -320,9 +304,24 @@ Button Blogin;
 
 
                   }
+                    if(!success)
+                 {
+
+                     Toast.makeText(this,error,Toast.LENGTH_LONG).show();
+                     Log.d("error",error);
+                    Log.d("de",success.toString());
+                     return;
+
+                 }
+
+
+
+
+
                 }
                 catch (JSONException e) {
                     Log.d("data","invalid");
+                    Log.d("de","invalid");
                     //some exception handler code.
                 }
 
@@ -367,6 +366,7 @@ Button Blogin;
     public boolean validate() {
         boolean valid = true;
 
+
         String Email = email.getText().toString();
         String Password = password.getText().toString();
 
@@ -383,6 +383,10 @@ Button Blogin;
         } else {
            password.setError(null);
         }
+        if(!successful)
+      {
+            valid = false;
+       }
 
         return valid;
     }

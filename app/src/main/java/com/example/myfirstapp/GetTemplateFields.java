@@ -61,6 +61,8 @@ public class GetTemplateFields extends AppCompatActivity {
         }
         public TextView getTv() {
             return tv;
+
+
         }
         public void setEdt(EditText edt) {
             this.edt = edt;

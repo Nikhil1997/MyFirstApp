@@ -37,6 +37,7 @@ public class SignUpActivity extends AppCompatActivity {
     TextView linklogin;
     Button sign_up;
     String FirstName, LastName , EmailText , PasswordText , CompanyName, MobileNumber;
+    private Boolean signupsuccessful;
 
 
     @Override
@@ -74,6 +75,11 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void signup() {
 
+        try {
+            Accountdetails();
+        } catch (Exception e) {
+
+        }
 
         if (!validate()) {
             onSignupFailed();
@@ -87,11 +93,7 @@ public class SignUpActivity extends AppCompatActivity {
         progress_Dialog.setIndeterminate(true);
         progress_Dialog.setMessage("Creating Account...");
         progress_Dialog.show();
-        try {
-            Accountdetails();
-        } catch (Exception e) {
 
-        }
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
@@ -113,7 +115,8 @@ public class SignUpActivity extends AppCompatActivity {
     public void onSignupSuccess() {
         sign_up.setEnabled(true);
         setResult(RESULT_OK, null);
-        Toast.makeText(this,"New Account Created Successfully",Toast.LENGTH_LONG).show();
+       Toast.makeText(this,"You have successfully created an account with Mobizite.",Toast.LENGTH_LONG).show();
+
         finish();
     }
 
@@ -171,14 +174,17 @@ public void Accountdetails() throws UnsupportedEncodingException {
         try {
             JSONObject json = new JSONObject(a);
             Boolean success = json.getBoolean("success");
+            String message = json.getString("message");
             Log.v("success:", "" + success);
-            JSONArray info = json.getJSONArray("userInfo");
-            JSONObject d = info.getJSONObject(0);
-            int id = d.getInt("id");
-            Log.d("id", "" + id);
 
 
+             signupsuccessful = success;
             if (success) {
+                JSONArray info = json.getJSONArray("userInfo");
+                JSONObject d = info.getJSONObject(0);
+                int id = d.getInt("id");
+                Log.d("id", "" + id);
+
                 Intent i = new Intent(SignUpActivity.this, MainActivity.class);
                 //  Intent in = new Intent(MainActivity.this , GetFields.class) ;
                 EditText email = (EditText) findViewById(R.id.input_email);
@@ -193,7 +199,16 @@ public void Accountdetails() throws UnsupportedEncodingException {
                 startActivity(i);
 
 
+
             }
+            if(!success)
+            {
+                Toast.makeText(this,message,Toast.LENGTH_LONG).show();
+                return;
+            }
+
+
+
         } catch (JSONException e) {
             Log.d("data", "invalid");
             //some exception handler code.
@@ -236,6 +251,10 @@ public void Accountdetails() throws UnsupportedEncodingException {
             valid = false;
         } else {
             passwordtext.setError(null);
+        }
+        if(!signupsuccessful)
+        {
+            valid = false;
         }
 
         return valid;

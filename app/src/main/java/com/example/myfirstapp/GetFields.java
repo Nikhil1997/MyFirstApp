@@ -1,6 +1,7 @@
 package com.example.myfirstapp;
 
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.StrictMode;
@@ -8,8 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -80,6 +83,8 @@ public class GetFields extends AppCompatActivity {
         String[] FieldName;
         final Button btn = new Button(this);
 
+
+
         valid = false;
         correct_email = false;
         crct_number = false;
@@ -100,6 +105,8 @@ public class GetFields extends AppCompatActivity {
         String userid =  bun.getString("userid");
         Log.d("out",userid);
         Log.d("Output", Response);
+
+
 
 
         try {
@@ -218,16 +225,16 @@ public class GetFields extends AppCompatActivity {
             tit.setText(title);
             tit.setTextSize(20);
             tit.setTextColor(0xff66ff66);
-            tit.setBackgroundColor(0xff578434);
+           // tit.setBackgroundColor(0xff578434);
             tit.setPadding(50,50,50,50);
             ll.addView(tit);
 
             TextView sub = new TextView(this);
             sub.setText(subtitle);
             sub.setTextSize(15);
-            sub.setTextColor(0xff557689);
-            sub.setBackgroundColor(0xff234532);
-            sub.setPadding(50,50,50,50);
+            sub.setTextColor(0xff4433dc);
+           // sub.setBackgroundColor(0xff234532);
+            sub.setPadding(40,40,40,40);
             ll.addView(sub);
 
 
@@ -266,6 +273,7 @@ public class GetFields extends AppCompatActivity {
 
                     label.setHint(b);
 
+
                     ll.addView(label);
 
                     EditText lab = new EditText(this);
@@ -283,23 +291,35 @@ public class GetFields extends AppCompatActivity {
                 {
                     ll.addView(lab);
                     lab.setInputType(InputType.TYPE_CLASS_TEXT);
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(lab.getWindowToken(), 0);
+
                     //Toast.makeText(getApplicationContext(), "matched",Toast.LENGTH_LONG).show();
                 }
                  if( c.equals("email") )
                 {
                     ll.addView(lab);
                     lab.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(lab.getWindowToken(), 0);
+
 
                 }
                  if( c.equals("phone"))
                 {
                     ll.addView(lab);
                     lab.setInputType(InputType.TYPE_CLASS_PHONE);
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(lab.getWindowToken(), 0);
+
                 }
                 if( c.equals("number"))
                 {
                     ll.addView(lab);
                     lab.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(lab.getWindowToken(), 0);
+
                 }
                 if(c.equals("url"))
                 {
@@ -819,7 +839,15 @@ public class GetFields extends AppCompatActivity {
 
             Log.d("data", "invalid");
         }
-    }
+
+
+
+
+        }
+
+
+
+
 
 
     public void GetForm(String[] stringname) throws UnsupportedEncodingException {
