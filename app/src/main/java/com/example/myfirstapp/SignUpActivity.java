@@ -2,10 +2,12 @@ package com.example.myfirstapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.UnsupportedSchemeException;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -53,6 +55,13 @@ public class SignUpActivity extends AppCompatActivity {
         sign_up = (Button)findViewById(R.id.btn_signup);
         linklogin = (TextView)findViewById(R.id.link_login) ;
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Sign Up");
+        toolbar.setBackgroundColor(Color.rgb(40,100,20));
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,13 +73,20 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Finish the registration screen and return to the Login activity
                 //finish();
-                Intent t = new Intent(getApplicationContext(),MainActivity.class);
+                Intent t = new Intent(getApplicationContext(),HomePageActivity.class);
                 startActivity(t);
 
             }
         });
 
 
+    }
+
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     public void signup() {

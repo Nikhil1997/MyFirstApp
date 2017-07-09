@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.view.MenuItem;
@@ -82,6 +83,9 @@ public class GetFields extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         String[] FieldName;
         final Button btn = new Button(this);
+
+
+
 
 
 
@@ -219,6 +223,23 @@ public class GetFields extends AppCompatActivity {
             sv.setLayoutParams(new android.support.v7.app.ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT));
             LinearLayout ll = new LinearLayout(this);
             ll.setOrientation(LinearLayout.VERTICAL);
+
+       //     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+         //   toolbar.setTitle("Sign Up");
+
+
+       //     ll.addView(toolbar);
+       //     toolbar.setBackgroundColor(Color.rgb(40,100,20));
+       //     setSupportActionBar(toolbar);
+       //     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //    getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        //    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+     //           @Override
+      //         public void onClick(View v) {
+    //                startActivity(new         Intent(getApplicationContext(),GetTemplate.class));
+      //          }
+      //      });
             String[] stringname = new String[fields.length()];
 
             TextView tit = new TextView(this);

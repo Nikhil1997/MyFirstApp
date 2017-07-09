@@ -1,11 +1,13 @@
 package com.example.myfirstapp;
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.StrictMode;
 import android.provider.ContactsContract;
 import android.provider.SyncStateContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -82,9 +84,24 @@ Button Blogin;
 
         password = (EditText) findViewById(R.id.input_password);
         signuplink = (TextView) findViewById(R.id.link_signup);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Sign In");
+        toolbar.setBackgroundColor(Color.rgb(40,100,20));
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+      //  toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+     //       @Override
+     //       public void onClick(View v) {
+       //         startActivity(new         Intent(getApplicationContext(),HomePageActivity.class));
+      //      }
+      //  });
+
       //  getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
      //   getSupportActionBar().setHomeButtonEnabled(true);
 
 
@@ -116,6 +133,16 @@ Button Blogin;
 
 
     }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+  //  @Override
+  //  public boolean onSupportNavigateUp() {
+  //      onBackPressed();
+  //      return true;
+   // }
 
  //   @Override
  //   public boolean onSupportNavigateUp(){
@@ -123,11 +150,7 @@ Button Blogin;
   //      return true;
    // }
 
-    @Override
-    public boolean onSupportNavigateUp(){
-        finish();
-        return true;
-    }
+
 
 
     public void login(){
