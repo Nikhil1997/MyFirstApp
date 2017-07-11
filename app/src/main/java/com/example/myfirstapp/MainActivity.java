@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.StrictMode;
 import android.provider.ContactsContract;
 import android.provider.SyncStateContract;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -312,13 +313,20 @@ Button Blogin;
                        EditText email = (EditText) findViewById(R.id.input_email);
                        String getrec=email.getText().toString();
                        Bundle bundle = new Bundle();
-                       bundle.putString("Email", getrec);
-                     //  Bundle bun = new Bundle();
-                       bundle.putString("userid",Integer.toString(id));
-                      //in.putExtras(bun) ;
 
-                       i.putExtras(bundle);
-                        startActivity(i);
+                           bundle.putString("Email", getrec);
+                           Fragment fragobj = new Fragment();
+                           fragobj.setArguments(bundle);
+
+                           //  Bundle bun = new Bundle();
+                           bundle.putString("userid", Integer.toString(id));
+
+
+                           //in.putExtras(bun) ;
+
+                           i.putExtras(bundle);
+                           startActivity(i);
+
                        Log.d("dr",success.toString());
 
 

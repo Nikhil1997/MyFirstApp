@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -245,8 +246,8 @@ public class GetFields extends AppCompatActivity {
             TextView tit = new TextView(this);
             tit.setText(title);
             tit.setTextSize(20);
-            tit.setTextColor(0xff66ff66);
-           // tit.setBackgroundColor(0xff578434);
+           // tit.setTextColor(0xff66ff66);
+           tit.setBackgroundColor(0xff66ff66);
             tit.setPadding(50,50,50,50);
             ll.addView(tit);
 
@@ -293,12 +294,19 @@ public class GetFields extends AppCompatActivity {
                     TextView label = new TextView(this);
 
                     label.setHint(b);
+                    label.setTextColor(233);
+                    label.setPadding(20,20,20,20);
+                    label.setTypeface(Typeface.DEFAULT_BOLD);
+                    label.setTextSize(20);
 
 
                     ll.addView(label);
 
                     EditText lab = new EditText(this);
                     lab.setId(j);
+                lab.setPadding(20, 40 ,40 ,40);
+
+                lab.setBackgroundColor(234699399);
                  // String s = "{datatype=text}";
 
              //   else if(g == "")
@@ -811,6 +819,7 @@ public class GetFields extends AppCompatActivity {
 
 
                         }
+
   //                      for(int i=0; i < allEds.size(); i++){
 
 //                            if( allEds.get(i).getText().toString().trim().equals("") && allEds.get(i).getText().toString().length() < minsize.get(i) &&  allEds.get(i).getText().toString().length() > maxsize.get(i) ) {
@@ -842,6 +851,14 @@ public class GetFields extends AppCompatActivity {
                         // CALL  method to make post method call
 
                         GetForm(stringname);
+                        if(success)
+                        {
+                            Toast.makeText(getApplicationContext(),"Form Submitted Successfully", Toast.LENGTH_LONG).show();
+                        }
+                        else
+                        {
+                            Toast.makeText(getApplicationContext(),"Fill the Details Correctly", Toast.LENGTH_LONG).show();
+                        }
 
 
                     } catch (Exception ex) {

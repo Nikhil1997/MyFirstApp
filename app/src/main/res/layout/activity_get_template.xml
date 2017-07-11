@@ -30,11 +30,13 @@
     </FrameLayout>
 
    <Button
-       android:text="Get_User_Templates"
+       android:text="Browse Template Gallery"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
        android:gravity="center"
-       android:background="@android:color/holo_blue_light"
+       android:background="@color/colorAccent"
+       android:paddingTop="50dp"
+       android:paddingBottom="50dp"
        android:layout_marginTop="27dp"
        android:id="@+id/BgetTemplate"
         android:onClick="OnButtonClick"/>

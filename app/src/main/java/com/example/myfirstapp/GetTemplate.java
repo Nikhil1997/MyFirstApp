@@ -287,6 +287,12 @@ public class GetTemplate extends AppCompatActivity {
                     sv.setLayoutParams(new android.support.v7.app.ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT));
                     LinearLayout ll = new LinearLayout(this);
                     ll.setOrientation(LinearLayout.VERTICAL);
+             //       Toolbar mToolbar = (Toolbar)findViewById(R.id.toolbar);
+             //       LinearLayout layoutToolbar = (LinearLayout)
+             //               mToolbar.findViewById(R.id.backbar);
+              //      ActionBar actionBar = getActionBar();
+             //       actionBar.setDisplayHomeAsUpEnabled(true);
+                 //   layoutToolbar.addView();
 
                     final int arraySize = info.length();
 
@@ -295,6 +301,11 @@ public class GetTemplate extends AppCompatActivity {
                     for (int i = 0; i < arraySize; i++) {
                         JSONObject data = info.getJSONObject(i);
                         String name = data.getString("name");
+                        String creationdate = data.getString("creation_date");
+                        String sub_title = data.getString("sub_title");
+                        String sub = sub_title.toLowerCase();
+
+                        Log.d("creation",creationdate);
                        // JSONObject number = info.getJSONObject(i);
                         //int no = number.getInt("id");
                       //  List.append(name);
@@ -306,14 +317,22 @@ public class GetTemplate extends AppCompatActivity {
                                 LinearLayout.LayoutParams.MATCH_PARENT,
                                 LinearLayout.LayoutParams.WRAP_CONTENT);
                         Button btn = new Button(this);
+
                         int p = arrlist.get(i);
                        Log.d("p",Integer.toString(p));
                         btn.setId(p);
+
+
                        //btn.setOnClickListener(getOnClickDoSomething(button));
                        final int id_ = btn.getId();
-                        btn.setText(name);
-                        btn.setBackgroundColor(Color.rgb(100, 80, 40));
-                        params.setMargins(20, 20, 20, 60);
+                        btn.setText( name  + "\n\n" + sub +
+                                "\n\n\ncreationdate: " + creationdate);
+
+                     //   btn.setBackgroundColor(Color.rgb(40, 80, 40));
+                        btn.setPadding(20,60,20,180);
+                        btn.setBackgroundColor(0xff66ff66);
+                        params.setMargins(20, 40, 20, 60);
+
                          ll.addView(btn, params);
 
                         btn1 = ((Button) findViewById(id_));
@@ -372,6 +391,7 @@ public class GetTemplate extends AppCompatActivity {
                     }
 
                    ll.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+
                    // this.setContentView(ll, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                     sv.addView(ll);
                     this.setContentView(sv);
