@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "159274219201",
+    "project_id": "myfirstapp-173609"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:159274219201:android:f363407d1d70e5c1",
+        "android_client_info": {
+          "package_name": "com.example.myfirstapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "159274219201-hgeblilvei2noobba2e8htu9si4a044d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myfirstapp",
+            "certificate_hash": "bb0d6d04c75143e16240937a7fbf9310ed5b4bdf"
+          }
+        },
+        {
+          "client_id": "159274219201-3drnrp870jf8b2jimeci1tp5osh4ckiq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDst2RUe7ilMuVtO15T1L-TnLERIl2Fr98"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
